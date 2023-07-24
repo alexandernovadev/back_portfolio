@@ -1,10 +1,20 @@
-const express = require('express')
-const app = express()
+import express, { Request, Response, NextFunction, Application } from 'express'
+import moviesApi from '../routes/movies.routes'
+import entriesApi from '../routes/entriesjira'
+import {
+  logErrors,
+  errorHandler,
+  wrapError
+} from '../utils/middleware/errorHandlers'
+import notFoundHandler from '../utils/middleware/notFoundHandler'
+import { config } from '../config/index'
+
+const app: Application = express()
 
 app.use(express.json())
 
 // Cors
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   res.header('Access-Control-Allow-Origin', '*')
   res.header(
     'Access-Control-Allow-Headers',
@@ -17,31 +27,17 @@ app.use((req, res, next) => {
 
 // Home Index
 
-//* ***********/
-// EndPoints
-const moviesApi = require('./routes/movies.routes')
-moviesApi(app)
 
-const entriesApi = require('./routes/entriesjira')
+// EndPoints
+moviesApi(app)
 entriesApi(app)
 
-
-
-//* ***********/
-// Midlewares
-const {
-  logErrors,
-  errorHandler,
-  wrapError
-} = require('./utils/middleware/errorHandlers.js')
-
-const notFoundHandler = require('./utils/middleware/notFoundHandler')
-const { config } = require('./config/index')
+// Middlewares
 app.use(logErrors)
 app.use(wrapError)
 app.use(errorHandler)
 app.use(notFoundHandler)
 
 app.listen(config.port, function() {
-  console.log(`Listening http://localhost:${config.port}`)
+  console.log(`\nListening http://localhost:${config.port} \n\n\n`)
 })
