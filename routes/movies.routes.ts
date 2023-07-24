@@ -81,7 +81,7 @@ const moviesApi = (app: express.Application) => {
 
   router.put(
     '/:movieId',
-    validationHandler({ movieId: movieIdSchema }, 'params'),
+    validationHandler(movieIdSchemaObject, 'params'),
     validationHandler(updateMovieSchema),
     async function(req: Request, res: Response, next: NextFunction) {
       const { movieId } = req.params
@@ -105,7 +105,7 @@ const moviesApi = (app: express.Application) => {
 
   router.delete(
     '/:movieId',
-    validationHandler({ movieId: movieIdSchema }, 'params'),
+    validationHandler( movieIdSchemaObject , 'params'),
     async function(req: Request, res: Response, next: NextFunction) {
       const { movieId } = req.params
 
