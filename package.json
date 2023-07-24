@@ -17,6 +17,7 @@
   "dependencies": {
     "@hapi/boom": "^9.1.4",
     "@hapi/joi": "^17.1.1",
+    "@types/mongodb": "^3.3.11",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -28,7 +29,6 @@
     "@types/express": "^4.17.17",
     "@types/hapi__joi": "^17.1.9",
     "@types/mocha": "^10.0.1",
-    "@types/mongodb": "^3.5.9",
     "@types/node": "^20.4.4",
     "@types/sinon": "^10.0.15",
     "bson": "^5.4.0",
