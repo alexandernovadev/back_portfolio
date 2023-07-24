@@ -22,6 +22,11 @@ app.use((req, res, next) => {
 const moviesApi = require('./routes/movies.routes')
 moviesApi(app)
 
+const entriesApi = require('./routes/entriesjira')
+entriesApi(app)
+
+
+
 //* ***********/
 // Midlewares
 const {
