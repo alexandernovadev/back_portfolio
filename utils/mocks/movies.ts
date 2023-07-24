@@ -1,4 +1,16 @@
-const moviesMock = [
+interface Movie {
+  id: string
+  title: string
+  year: number
+  cover: string
+  description: string
+  duration: number
+  contentRating: string
+  source: string
+  tags: string[]
+}
+
+const moviesMock: Movie[] = [
   {
     id: 'd2a4a062-d256-41bb-b1b2-9d915af6b75e',
     title: 'Notti bianche, Le (White Nights)',
@@ -153,31 +165,26 @@ const moviesMock = [
   }
 ]
 
-function filteredMoviesMock(tag) {
+function filteredMoviesMock(tag: string): Movie[] {
   return moviesMock.filter(movie => movie.tags.includes(tag))
 }
 
-function filteredMovieMock(id) {
+function filteredMovieMock(id: string): Movie[] {
   return moviesMock.filter(movie => movie.id == id)
 }
 
 class MoviesServiceMock {
-  async getMovies() {
+  async getMovies(): Promise<Movie[]> {
     return Promise.resolve(moviesMock)
   }
 
-  async getMovie() {
+  async getMovie(): Promise<Movie[]> {
     return Promise.resolve(moviesMock)
   }
 
-  async createMovie() {
+  async createMovie(): Promise<Movie> {
     return Promise.resolve(moviesMock[0])
   }
 }
 
-module.exports = {
-  moviesMock,
-  filteredMoviesMock,
-  filteredMovieMock,
-  MoviesServiceMock
-}
+export { moviesMock, filteredMoviesMock, filteredMovieMock, MoviesServiceMock }
