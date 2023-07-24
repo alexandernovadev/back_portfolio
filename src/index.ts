@@ -4,7 +4,7 @@ import entriesApi from '../routes/entriesjira'
 import {
   logErrors,
   errorHandler,
-  wrapError
+  wrapErrors
 } from '../utils/middleware/errorHandlers'
 import notFoundHandler from '../utils/middleware/notFoundHandler'
 import { config } from '../config/index'
@@ -34,7 +34,7 @@ entriesApi(app)
 
 // Middlewares
 app.use(logErrors)
-app.use(wrapError)
+app.use(wrapErrors)
 app.use(errorHandler)
 app.use(notFoundHandler)
 
