@@ -1,5 +1,7 @@
-import { MongoClient, ObjectId } from 'mongodb'
+import { MongoClient } from 'mongodb'
 import { config } from '../config'
+
+import { ObjectId } from 'bson'
 
 const USER = encodeURIComponent(config.dbUser || '')
 const PASSWORD = encodeURIComponent(config.dbPassword || '')
