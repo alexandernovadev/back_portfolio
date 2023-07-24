@@ -1,4 +1,6 @@
-require('dotenv').config()
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const config = {
   dev: process.env.NODE_ENV !== 'production',
@@ -11,4 +13,4 @@ const config = {
   URL_MONGO: process.env.DB_URL
 }
 
-module.exports = { config }
+export { config }
