@@ -4,7 +4,8 @@ import MoviesService from '../services/movies.service'
 import {
   movieIdSchema,
   createMovieSchema,
-  updateMovieSchema
+  updateMovieSchema,
+  movieIdSchemaObject
 } from '../utils/shemas/movies'
 
 import validationHandler from '../utils/middleware/validationHandler'
@@ -42,7 +43,7 @@ const moviesApi = (app: express.Application) => {
 
   router.get(
     '/:movieId',
-    validationHandler({ movieId: movieIdSchema }, 'params'),
+    validationHandler(movieIdSchemaObject, 'params'),
     async function(req: Request, res: Response, next: NextFunction) {
       cacheResponse(res, SIXTY_MINUTES_IN_SECONDS)
 
