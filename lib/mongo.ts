@@ -1,7 +1,5 @@
-import { MongoClient } from 'mongodb'
+import { MongoClient, ObjectId } from 'mongodb'
 import { config } from '../config'
-
-import { ObjectId } from 'bson'
 
 const USER = encodeURIComponent(config.dbUser || '')
 const PASSWORD = encodeURIComponent(config.dbPassword || '')
@@ -15,27 +13,22 @@ class MongoLib {
   static connection: Promise<any>
 
   constructor() {
-    this.client = new MongoClient(MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    })
+    this.client = new MongoClient(MONGO_URI)
     this.dbName = DB_NAME
   }
 
   connect() {
     if (!MongoLib.connection) {
-      MongoLib.connection = new Promise((resolve, reject) => {
-        this.client.connect(err => {
-          if (err) {
-            reject(err)
-          }
-
+      MongoLib.connection = this.client
+        .connect()
+        .then((client: any) => {
           console.log('Connected succesfully to mongo')
-          resolve(this.client.db(this.dbName))
+          return client.db(this.dbName)
         })
-      })
+        .catch((err: any) => {
+          console.error('Connection error', err)
+        })
     }
-
     return MongoLib.connection
   }
 
