@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from "express"
-import { TaskService } from "../../application/services/task.service"
-import { TaskRepository } from "../repositories/task.repository"
-import { NotFoundError } from "../../domain/errors/NotFoundError"
+import { NextFunction, Request, Response } from 'express'
+import { TaskService } from '../../application/services/task.service'
+import { TaskRepository } from '../repositories/task.repository'
+import { NotFoundError } from '../../domain/errors/NotFoundError'
 
 const taskService = new TaskService(new TaskRepository())
 
@@ -10,9 +10,17 @@ export const getAllTasks = async (_req: Request, res: Response) => {
   res.json(tasks)
 }
 
-export const createTask = async (req: Request, res: Response) => {
-  const newTask = await taskService.createTask(req.body)
-  res.json(newTask)
+export const createTask = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const task = await taskService.createTask(req.body)
+    res.status(201).json(task)
+  } catch (error) {
+    next(error) // Esto pasará el error al middleware de errores
+  }
 }
 
 export async function getTask(req: Request, res: Response, next: NextFunction) {

@@ -1,8 +1,10 @@
-import { ITask } from "../../domain/entities/task.entity"
-import { ITaskRepository } from "../../domain/interfaces/task.repository.interface"
-import mongoose, { Schema, Document, model } from "mongoose"
+import { ITask } from '../../domain/entities/task.entity'
+import { ITaskRepository } from '../../domain/interfaces/task.repository.interface'
+import mongoose, { Schema, Document, model } from 'mongoose'
 
 export interface IMongoTask extends Document, ITask {}
+
+const valueStatus = ['pending', 'in-progress', 'finished']
 
 const TaskSchema: Schema = new Schema({
   description: { type: String, required: true },
@@ -10,14 +12,14 @@ const TaskSchema: Schema = new Schema({
   status: {
     type: String,
     enum: {
-      values: ["pending", "in-progress", "finished"],
-      message: "{VALUE} no es un estado permitido",
+      values: valueStatus,
+      message: `{VALUE} no es un estado permitido [ VALUES : ${String(valueStatus)} ]`,
     },
-    default: "pending",
+    default: 'pending',
   },
 })
 
-const Task = model<IMongoTask>("Task", TaskSchema)
+const Task = model<IMongoTask>('Task', TaskSchema)
 
 export class TaskRepository implements ITaskRepository {
   async getAll(): Promise<ITask[]> {
