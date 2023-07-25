@@ -17,18 +17,14 @@ class MongoLib {
     this.dbName = DB_NAME
   }
 
-  connect() {
+  async connect() {
     if (!MongoLib.connection) {
-      MongoLib.connection = this.client
-        .connect()
-        .then((client: any) => {
-          console.log('Connected succesfully to mongo')
-          return client.db(this.dbName)
-        })
-        .catch((err: any) => {
-          console.error('Connection error', err)
-        })
+      MongoLib.connection = this.client.connect().then(client => {
+        console.log('Connected successfully to mongodb')
+        return client.db(this.dbName)
+      })
     }
+
     return MongoLib.connection
   }
 
