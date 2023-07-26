@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { MongooseError } from 'mongoose'
 import { ITask } from '../../domain/entities/task.entity'
 import { NotFoundError } from '../../domain/errors/NotFoundError'
 import { ITaskRepository } from './../../domain/interfaces/task.repository.interface'
@@ -21,13 +21,14 @@ export class TaskService {
 
   async createTask(task: ITask) {
     try {
-      return await this.taskRepository.create(task);
+      return await this.taskRepository.create(task)
     } catch (error) {
-      if (error instanceof mongoose.Error.ValidationError) {
-        const errorMessage = error.errors.status.message;
-        throw new ValidationError(errorMessage);
+      if (error instanceof MongooseError) {
+        throw new ValidationError(
+          String(error.message.replace('Task validation failed:', '').trim())
+        )
       }
-      throw error; // Si no es un error de validación, lo lanzamos tal cual
+      throw error // Si no es un error de validación, lo lanzamos tal cual
     }
   }
 
